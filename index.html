@@ -205,10 +205,10 @@ button { cursor: pointer; font-family: var(--font); }
 
 /* TAB BAR */
 .tab-bar { position: fixed; bottom: 0; left: 0; right: 0; display: flex; background: var(--bg-primary); border-top: 0.5px solid var(--border-faint); padding-bottom: env(safe-area-inset-bottom); z-index: 100; }
-.tab { flex: 1; text-align: center; padding: 10px 0; color: var(--text-secondary); cursor: pointer; font-size: 11px; font-weight: 500; position: relative; transition: color 0.12s; }
+.tab { flex: 1; text-align: center; padding: 10px 0; color: var(--text-secondary); cursor: pointer; font-size: 11px; font-weight: 500; position: relative; transition: color 0.12s; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; }
 .tab.active { color: var(--green); }
 .tab.active::after { content: ""; position: absolute; top: -0.5px; left: 0; right: 0; height: 2px; background: var(--green); }
-.tab svg { display: block; margin: 0 auto 3px; }
+.tab svg { display: block; flex-shrink: 0; }
 
 @media (max-width: 480px) {
   .meal-time { display: none; }
@@ -345,7 +345,7 @@ button { cursor: pointer; font-family: var(--font); }
 <!-- ── TAB BAR ── -->
 <div class="tab-bar">
   <div class="tab active" id="tab-meals" onclick="switchTab('meals')">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
     Meals
   </div>
   <div class="tab" id="tab-workout" onclick="switchTab('workout')">
@@ -439,7 +439,7 @@ const POOL = {
     {name:"Almond Granola Bars",     items:["2 oat bars: oats + almond butter + honey","1 cup whole milk","1 banana"],                                p:14,c:62,f:14,kcal:415},
     {name:"Cheese Quesadilla",       items:["1 large flour tortilla","2 oz shredded cheddar","Salsa + sour cream"],                                   p:16,c:54,f:16,kcal:410},
     {name:"PB Banana Smoothie",      items:["1.5 cups whole milk + 2 bananas","2 tbsp peanut butter + 1 tbsp honey","Side: 3 crackers"],              p:14,c:64,f:14,kcal:415},
-    {name:"Hummus & Pita",           items:["2 large pita breads","4 tbsp hummus","1 banana + glass of milk"],                                        p:14,c:62,f:12,kcal:408},
+    {name:"Honey Ricotta Toast",       items:["2 thick slices sourdough toast","4 tbsp ricotta cheese + 2 tbsp honey","1 banana + glass of whole milk"],  p:16,c:64,f:12,kcal:415},
     {name:"Tuna Rice Cake Stack",    items:["3 rice cakes","2 oz tuna in olive oil","Lemon + herbs"],                                                 p:18,c:50,f:12,kcal:390},
     {name:"Greek Yogurt & Honey",    items:["1.5 cups full-fat Greek yogurt","2 tbsp honey","1 cup granola + banana"],                                p:20,c:66,f:10,kcal:422},
     {name:"Boiled Egg Snack Box",    items:["3 boiled eggs","5 whole grain crackers","1 cup whole milk + 1 apple"],                                   p:22,c:52,f:14,kcal:410}
@@ -466,7 +466,7 @@ const POOL = {
 const SHOPPING = [
   {cat:"Carbs & Grains", color:"#5fa83b", items:["Rolled oats (5 lb bag)","White jasmine rice (10 lb)","Spaghetti (2 lb)","Penne / rigatoni (2 lb)","Russet potatoes (8 large)","Sweet potatoes (3)","Bagels (6-pack)","Sourdough / whole wheat bread","Rice cakes","Granola (32 oz)","Macaroni (1 box)","Flour tortillas","Pita bread"]},
   {cat:"Protein",        color:"#4e9fa8", items:["Chicken breasts (2 lb)","Chicken thighs boneless (2 lb)","Rotisserie chicken (1)","Ground turkey (2 lb)","Ground beef 90/10 (2 lb)","Lean beef strips (1 lb)","Canned tuna in olive oil (4)","Shrimp (1 lb frozen)","Salmon fillets (1 lb)","Eggs (2 dozen)","Greek yogurt full-fat (64 oz)","Cottage cheese (16 oz)","Parmesan + mozzarella shredded"]},
-  {cat:"Dairy & Fats",   color:"#d4a017", items:["Whole milk (1 gallon)","Butter (1 lb)","Olive oil","Sesame oil (small)","Peanut butter (40 oz)","Almond butter (16 oz)","Sour cream (16 oz)","Shredded cheddar","Heavy cream (small)","Hummus (1 tub)"]},
+  {cat:"Dairy & Fats",   color:"#d4a017", items:["Whole milk (1 gallon)","Butter (1 lb)","Olive oil","Sesame oil (small)","Peanut butter (40 oz)","Almond butter (16 oz)","Sour cream (16 oz)","Shredded cheddar","Heavy cream (small)",]},
   {cat:"Produce & Extras",color:"#b8622a",items:["Bananas (2 bunches)","Apples (4)","Oranges (4)","Mangoes (3)","Blueberries (frozen)","Strawberries (frozen)","Pineapple chunks (canned)","Marinara sauce (2 jars)","Soy sauce","Teriyaki sauce","Honey","Maple syrup","Garlic + fresh herbs","Salsa (1 jar)","Black beans (2 cans)"]}
 ];
 
