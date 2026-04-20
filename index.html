@@ -164,7 +164,7 @@ button { cursor: pointer; font-family: var(--font); }
 /* SHOPPING */
 .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
 #view-shopping .shell { background: transparent; }
-.shop-cat { background: rgba(255,255,255,0.82); border-radius: 18px; padding: 1rem; border: 0.5px solid rgba(60,60,67,0.08); box-shadow: 0 6px 16px rgba(15,23,42,0.05); backdrop-filter: blur(16px); }
+.shop-cat { background: transparent; border-radius: 0; padding: 0.25rem 0; border: none; box-shadow: none; backdrop-filter: none; }
 .shop-cat-title { font-size: 11px; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 6px; }
 .cat-dot { width: 6px; height: 6px; border-radius: 50%; }
 .shop-items { list-style: none; }
@@ -174,6 +174,16 @@ button { cursor: pointer; font-family: var(--font); }
 .shop-item.checked .item-text { text-decoration: line-through; }
 .chk { width: 16px; height: 16px; border-radius: 4px; border: 0.5px solid var(--border-mid); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; }
 .shop-item.checked .chk { background: var(--green); border-color: var(--green); color: #fff; }
+.dropdown-section { background: rgba(255,255,255,0.82); border: 0.5px solid rgba(60,60,67,0.08); border-radius: 18px; overflow: hidden; box-shadow: 0 4px 14px rgba(15,23,42,0.04); backdrop-filter: blur(16px); }
+.dropdown-toggle { display: flex; align-items: center; gap: 10px; padding: 13px 14px; cursor: pointer; user-select: none; }
+.dropdown-section.clean .dropdown-toggle { justify-content: center; text-align: center; padding: 14px 16px; }
+.dropdown-title { font-size: 15px; font-weight: 600; letter-spacing: -0.02em; flex: 1; }
+.dropdown-section.clean .dropdown-title { flex: 0 1 auto; }
+.dropdown-subtitle { font-size: 12px; color: var(--text-tertiary); }
+.dropdown-section.clean .dropdown-subtitle { flex: 0 1 auto; }
+.dropdown-body { display: none; padding: 0 14px 14px; border-top: 0.5px solid var(--border-faint); background: rgba(255,255,255,0.38); }
+.dropdown-section.open .dropdown-body { display: block; }
+.dropdown-section.open .chevron { transform: rotate(180deg); }
 
 /* TIPS */
 .tip-row { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-bottom: 0.5px solid var(--border-faint); }
@@ -265,15 +275,12 @@ button { cursor: pointer; font-family: var(--font); }
 
     <div class="app-name">Meals</div>
 
+    <div class="day-tabs" id="dayTabs"></div>
+
     <div class="week-nav">
       <button class="nav-btn" id="prevBtn">&#8249;</button>
       <span class="week-title" id="weekTitle">—</span>
       <button class="nav-btn" id="nextBtn">&#8250;</button>
-    </div>
-
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;">
-      <span class="auto-badge">Auto-updated</span>
-      <span style="font-size:11px;color:var(--text-tertiary);" id="nextUpdate"></span>
     </div>
 
     <div class="macro-row">
@@ -281,9 +288,6 @@ button { cursor: pointer; font-family: var(--font); }
       <div class="macro-tile"><div class="macro-label">Protein</div><div class="macro-value" id="mProt">—</div></div>
       <div class="macro-tile"><div class="macro-label">Carbs</div><div class="macro-value" id="mCarb">—</div></div>
     </div>
-
-    <div class="day-tabs" id="dayTabs"></div>
-
     <div style="display:flex;align-items:center;justify-content:space-between;">
       <div>
         <div style="font-size:16px;font-weight:500;" id="dayName">—</div>
@@ -297,10 +301,17 @@ button { cursor: pointer; font-family: var(--font); }
 
     <div class="meal-list" id="mealList"></div>
 
-    <div class="card">
-      <div class="card-title">Anti-Bloat Tips</div>
-      <div id="tipsList"></div>
+    <div class="dropdown-section clean open" id="shoppingDropdown">
+      <div class="dropdown-toggle" id="shoppingToggle">
+        <div class="dropdown-title">Shopping List</div>
+        <div class="dropdown-subtitle" id="shoppingSubtitle">Tap to collapse</div>
+        <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+      </div>
+      <div class="dropdown-body">
+        <div class="shop-grid" id="shopGridMeals"></div>
+      </div>
     </div>
+
   </div>
 </div>
 
@@ -358,6 +369,8 @@ button { cursor: pointer; font-family: var(--font); }
   <div class="shell">
     <div class="app-name">Zero-Equipment & Bar Workout</div>
 
+    <div class="wk-split-tabs" id="splitTabs"></div>
+
     <div class="card" style="background:rgba(255,255,255,0.82);border-color:rgba(0,122,255,0.16);">
       <div style="font-size:13px;font-weight:500;margin-bottom:4px;">Built for Mass Gain 💪</div>
       <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;">High-volume bodyweight training that overloads your muscles and drives hypertrophy. Follow the weekly split below, rest 60–90s between sets.</div>
@@ -367,13 +380,17 @@ button { cursor: pointer; font-family: var(--font); }
       <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-secondary);"><span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:99px;background:rgba(255,255,255,0.72);border:1px solid rgba(15,23,42,0.08);color:var(--text-primary);font-weight:600;">Bodyweight only</span></div>
       <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-secondary);"><span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:99px;background:rgba(139,92,246,0.10);border:1px solid rgba(139,92,246,0.22);color:#7c3aed;font-weight:600;">🔩 Pull-up bar</span></div>
     </div>
-
-    <div class="wk-split-tabs" id="splitTabs"></div>
     <div id="workoutContent"></div>
 
-    <div class="card">
-      <div class="card-title">Progressive Overload Tips</div>
-      <div id="overloadTips"></div>
+    <div class="dropdown-section clean" id="overloadDropdown">
+      <div class="dropdown-toggle" id="overloadToggle">
+        <div class="dropdown-title">Progressive Overload Tips</div>
+        <div class="dropdown-subtitle" id="overloadSubtitle">Tap to expand</div>
+        <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+      </div>
+      <div class="dropdown-body">
+        <div id="overloadTips"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -387,10 +404,6 @@ button { cursor: pointer; font-family: var(--font); }
   <div class="tab" id="tab-workout" onclick="switchTab('workout')">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 9.5v5"/><path d="M5.5 7.5v9"/><path d="M8.5 10.5v3"/><path d="M15.5 10.5v3"/><path d="M18.5 7.5v9"/><path d="M21.5 9.5v5"/><path d="M8.5 12h7"/></svg>
     Workout
-  </div>
-  <div class="tab" id="tab-shopping" onclick="switchTab('shopping')">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-    Shopping
   </div>
   <div class="tab" id="tab-progress" onclick="switchTab('progress')">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
@@ -500,8 +513,8 @@ const POOL = {
 };
 
 const SHOPPING = [
-  {cat:"Carbs & Grains", color:"#5fa83b", items:["Rolled oats (5 lb bag)","White jasmine rice (10 lb)","Spaghetti (2 lb)","Penne / rigatoni (2 lb)","Russet potatoes (8 large)","Sweet potatoes (3)","Bagels (6-pack)","Sourdough / whole wheat bread","Rice cakes","Granola (32 oz)","Macaroni (1 box)","Flour tortillas","Pita bread"]},
-  {cat:"Protein",        color:"#4e9fa8", items:["Chicken breasts (2 lb)","Chicken thighs boneless (2 lb)","Rotisserie chicken (1)","Ground turkey (2 lb)","Ground beef 90/10 (2 lb)","Lean beef strips (1 lb)","Canned tuna in olive oil (4)","Shrimp (1 lb frozen)","Salmon fillets (1 lb)","Eggs (2 dozen)","Greek yogurt full-fat (64 oz)","Cottage cheese (16 oz)","Parmesan + mozzarella shredded"]},
+  {cat:"Proteins",       color:"#4e9fa8", items:["Chicken breasts (2 lb)","Chicken thighs boneless (2 lb)","Rotisserie chicken (1)","Ground turkey (2 lb)","Ground beef 90/10 (2 lb)","Lean beef strips (1 lb)","Canned tuna in olive oil (4)","Shrimp (1 lb frozen)","Salmon fillets (1 lb)","Eggs (2 dozen)","Greek yogurt full-fat (64 oz)","Cottage cheese (16 oz)","Parmesan + mozzarella shredded"]},
+  {cat:"Carbs and Grains", color:"#5fa83b", items:["Rolled oats (5 lb bag)","White jasmine rice (10 lb)","Spaghetti (2 lb)","Penne / rigatoni (2 lb)","Russet potatoes (8 large)","Sweet potatoes (3)","Bagels (6-pack)","Sourdough / whole wheat bread","Rice cakes","Granola (32 oz)","Macaroni (1 box)","Flour tortillas","Pita bread"]},
   {cat:"Dairy & Fats",   color:"#d4a017", items:["Whole milk (1 gallon)","Butter (1 lb)","Olive oil","Sesame oil (small)","Peanut butter (40 oz)","Almond butter (16 oz)","Sour cream (16 oz)","Shredded cheddar","Heavy cream (small)",]},
   {cat:"Produce & Extras",color:"#b8622a",items:["Bananas (2 bunches)","Apples (4)","Oranges (4)","Mangoes (3)","Blueberries (frozen)","Strawberries (frozen)","Pineapple chunks (canned)","Marinara sauce (2 jars)","Soy sauce","Teriyaki sauce","Honey","Maple syrup","Garlic + fresh herbs","Salsa (1 jar)","Black beans (2 cans)"]}
 ];
@@ -755,11 +768,6 @@ function renderMealsView() {
   document.getElementById("prevBtn").disabled = false;
   document.getElementById("nextBtn").disabled = (wkOffset >= 4);
 
-  let nm = nextMonday(today);
-  let dc = daysUntil(nm);
-  document.getElementById("nextUpdate").textContent =
-    wkOffset === 0 ? (dc === 1 ? "New plan tomorrow" : "New plan in " + dc + " days") : "";
-
   let tabsEl = document.getElementById("dayTabs");
   tabsEl.innerHTML = "";
   for (let i = 0; i < 7; i++) {
@@ -866,8 +874,9 @@ function renderProgressView() {
 // ─────────────────────────────────────────
 // RENDER SHOPPING VIEW
 // ─────────────────────────────────────────
-function renderShoppingView() {
-  let grid = document.getElementById("shopGrid");
+function renderShoppingView(gridId) {
+  let grid = document.getElementById(gridId || "shopGrid");
+  if (!grid) return;
   grid.innerHTML = "";
   SHOPPING.forEach(function(cat){
     let div = document.createElement("div");
@@ -1028,6 +1037,18 @@ document.getElementById("nextBtn").addEventListener("click", function(){
 document.getElementById("shuffleBtn").addEventListener("click", function(){
   buildPlan(viewMonday(), true); renderDay();
 });
+document.getElementById("shoppingToggle").addEventListener("click", function(){
+  let dropdown = document.getElementById("shoppingDropdown");
+  dropdown.classList.toggle("open");
+  document.getElementById("shoppingSubtitle").textContent =
+    dropdown.classList.contains("open") ? "Tap to collapse" : "Tap to expand";
+});
+document.getElementById("overloadToggle").addEventListener("click", function(){
+  let dropdown = document.getElementById("overloadDropdown");
+  dropdown.classList.toggle("open");
+  document.getElementById("overloadSubtitle").textContent =
+    dropdown.classList.contains("open") ? "Tap to collapse" : "Tap to expand";
+});
 
 // ─────────────────────────────────────────
 // TOAST
@@ -1046,6 +1067,7 @@ loadData();
 buildPlan(thisMonday, false);
 renderMealsView();
 renderShoppingView();
+renderShoppingView("shopGridMeals");
 
 
 // ─────────────────────────────────────────
