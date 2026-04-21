@@ -43,6 +43,7 @@ body {
   font-family: var(--font);
   background:
     linear-gradient(180deg, #f8f8fa 0%, #f2f2f7 100%);
+  background-attachment: fixed;
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   min-height: 100dvh;
@@ -94,7 +95,7 @@ button { cursor: pointer; font-family: var(--font); }
 .secondary-btn { width: auto; min-height: 34px; padding: 0 12px; gap: 6px; font-size: 12px; font-weight: 600; letter-spacing: -0.01em; }
 
 /* CARDS */
-.card { background: var(--bg-elevated); border-radius: 18px; padding: 0.95rem; border: 0.5px solid rgba(60,60,67,0.08); box-shadow: 0 6px 18px rgba(15,23,42,0.05); backdrop-filter: blur(20px); }
+.card { background: var(--bg-elevated); border-radius: 18px; padding: 0.95rem; border: 0.5px solid rgba(0,122,255,0.16); box-shadow: 0 6px 18px rgba(15,23,42,0.05); backdrop-filter: blur(20px); }
 .card-title { font-size: 12px; color: var(--text-tertiary); letter-spacing: -0.01em; margin-bottom: 0.7rem; font-weight: 600; }
 
 /* MACRO TILES */
@@ -118,7 +119,7 @@ button { cursor: pointer; font-family: var(--font); }
 
 /* MEAL ROWS */
 .meal-list { display: flex; flex-direction: column; gap: 8px; }
-.meal-row { background: rgba(255,255,255,0.82); border: 0.5px solid rgba(60,60,67,0.08); border-radius: 18px; overflow: hidden; box-shadow: 0 4px 14px rgba(15,23,42,0.04); backdrop-filter: blur(16px); }
+.meal-row { background: rgba(255,255,255,0.82); border: 0.5px solid rgba(0,122,255,0.16); border-radius: 18px; overflow: hidden; box-shadow: 0 4px 14px rgba(15,23,42,0.04); backdrop-filter: blur(16px); }
 .meal-header { display: flex; align-items: center; gap: 10px; padding: 12px 14px; cursor: pointer; user-select: none; }
 .meal-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 .meal-time { font-size: 11px; color: var(--text-tertiary); letter-spacing: -0.01em; width: 92px; flex-shrink: 0; }
@@ -174,14 +175,14 @@ button { cursor: pointer; font-family: var(--font); }
 .shop-item.checked .item-text { text-decoration: line-through; }
 .chk { width: 16px; height: 16px; border-radius: 4px; border: 0.5px solid var(--border-mid); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; }
 .shop-item.checked .chk { background: var(--green); border-color: var(--green); color: #fff; }
-.dropdown-section { background: rgba(255,255,255,0.82); border: 0.5px solid rgba(60,60,67,0.08); border-radius: 18px; overflow: hidden; box-shadow: 0 4px 14px rgba(15,23,42,0.04); backdrop-filter: blur(16px); }
+.dropdown-section { background: rgba(255,255,255,0.82); border: 0.5px solid rgba(0,122,255,0.16); border-radius: 18px; overflow: hidden; box-shadow: 0 4px 14px rgba(15,23,42,0.04); backdrop-filter: blur(16px); }
 .dropdown-toggle { display: flex; align-items: center; gap: 10px; padding: 13px 14px; cursor: pointer; user-select: none; }
 .dropdown-section.clean .dropdown-toggle { justify-content: center; text-align: center; padding: 14px 16px; }
 .dropdown-title { font-size: 15px; font-weight: 600; letter-spacing: -0.02em; flex: 1; }
 .dropdown-section.clean .dropdown-title { flex: 0 1 auto; }
 .dropdown-subtitle { font-size: 12px; color: var(--text-tertiary); }
 .dropdown-section.clean .dropdown-subtitle { flex: 0 1 auto; }
-.dropdown-body { display: none; padding: 0 14px 14px; border-top: 0.5px solid var(--border-faint); background: rgba(255,255,255,0.38); }
+.dropdown-body { display: none; padding: 0 14px 14px; border-top: 0.5px solid var(--border-faint); background: transparent; }
 .dropdown-section.open .dropdown-body { display: block; }
 .dropdown-section.open .chevron { transform: rotate(180deg); }
 
@@ -202,7 +203,7 @@ button { cursor: pointer; font-family: var(--font); }
 .day-badge.work { background:var(--green-dim); color:var(--green); border:0.5px solid var(--green); }
 .day-badge.rest { background:rgba(136,135,128,0.1); color:var(--text-tertiary); border:0.5px solid var(--border-faint); }
 .exercise-list { display:flex; flex-direction:column; gap:8px; }
-.ex-row { background:var(--bg-primary); border:0.5px solid var(--border-faint); border-radius:var(--r-lg); overflow:hidden; }
+.ex-row { background:var(--bg-primary); border:0.5px solid rgba(0,122,255,0.16); border-radius:var(--r-lg); overflow:hidden; }
 .ex-header { display:flex; align-items:center; gap:10px; padding:12px 14px; cursor:pointer; }
 .ex-num { width:22px; height:22px; border-radius:50%; background:var(--green-dim); color:var(--green); font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
 .ex-name { font-size:14px; font-weight:700; flex:1; letter-spacing:-0.01em; }
@@ -301,10 +302,10 @@ button { cursor: pointer; font-family: var(--font); }
 
     <div class="meal-list" id="mealList"></div>
 
-    <div class="dropdown-section clean open" id="shoppingDropdown">
+    <div class="dropdown-section clean" id="shoppingDropdown">
       <div class="dropdown-toggle" id="shoppingToggle">
         <div class="dropdown-title">Shopping List</div>
-        <div class="dropdown-subtitle" id="shoppingSubtitle">Tap to collapse</div>
+        <div class="dropdown-subtitle" id="shoppingSubtitle">Expand</div>
         <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
       </div>
       <div class="dropdown-body">
@@ -385,7 +386,7 @@ button { cursor: pointer; font-family: var(--font); }
     <div class="dropdown-section clean" id="overloadDropdown">
       <div class="dropdown-toggle" id="overloadToggle">
         <div class="dropdown-title">Progressive Overload Tips</div>
-        <div class="dropdown-subtitle" id="overloadSubtitle">Tap to expand</div>
+        <div class="dropdown-subtitle" id="overloadSubtitle">Expand</div>
         <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
       </div>
       <div class="dropdown-body">
@@ -1041,13 +1042,13 @@ document.getElementById("shoppingToggle").addEventListener("click", function(){
   let dropdown = document.getElementById("shoppingDropdown");
   dropdown.classList.toggle("open");
   document.getElementById("shoppingSubtitle").textContent =
-    dropdown.classList.contains("open") ? "Tap to collapse" : "Tap to expand";
+    dropdown.classList.contains("open") ? "Collapse" : "Expand";
 });
 document.getElementById("overloadToggle").addEventListener("click", function(){
   let dropdown = document.getElementById("overloadDropdown");
   dropdown.classList.toggle("open");
   document.getElementById("overloadSubtitle").textContent =
-    dropdown.classList.contains("open") ? "Tap to collapse" : "Tap to expand";
+    dropdown.classList.contains("open") ? "Collapse" : "Expand";
 });
 
 // ─────────────────────────────────────────
